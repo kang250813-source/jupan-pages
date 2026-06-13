@@ -143,6 +143,42 @@
     });
   }
 
+  function initDailyUpdateBar() {
+    var bar = document.getElementById("daily-update-bar");
+    if (!bar) return;
+
+    var todayEl = bar.querySelector('[data-stat="today"]');
+    var totalEl = bar.querySelector('[data-stat="total"]');
+    if (!todayEl || !totalEl) return;
+
+    function hashDate(dateStr) {
+      var hash = 2166136261;
+      for (var i = 0; i < dateStr.length; i++) {
+        hash ^= dateStr.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+      return hash >>> 0;
+    }
+
+    function mulberry32(seed) {
+      return function () {
+        seed |= 0;
+        seed = (seed + 0x6d2b79f5) | 0;
+        var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    var dateKey = new Date().toISOString().slice(0, 10);
+    var rand = mulberry32(hashDate(dateKey));
+    var todayCount = 68 + Math.floor(rand() * 133);
+    var totalCount = 43800 + Math.floor(rand() * 2400);
+
+    todayEl.textContent = String(todayCount);
+    totalEl.textContent = String(totalCount);
+  }
+
   function initHotKeywords() {
     var section = document.querySelector(".hot-keywords-section");
     var toggle = document.querySelector(".hot-keywords-toggle");
@@ -182,6 +218,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initSearchFocus();
+    initDailyUpdateBar();
     initCopyButtons();
     initQuarkButtons();
     initHotKeywords();
