@@ -31,6 +31,7 @@
         ok = title.toLowerCase().indexOf(q) >= 0;
       }
       card.style.display = ok ? "" : "none";
+      card.setAttribute("data-filter-visible", ok ? "1" : "0");
       if (ok) visible++;
     });
     var hint = document.querySelector(".section-hint");
@@ -45,6 +46,13 @@
     document.querySelectorAll(".hot-keyword-chip").forEach(function (el) {
       el.classList.toggle("is-active", el.textContent.trim() === tag);
     });
+
+    if (window.DuanjukuPagination && window.DuanjukuPagination.refresh) {
+      var url = new URL(window.location.href);
+      url.searchParams.delete("page");
+      window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+      window.DuanjukuPagination.refresh();
+    }
   }
 
   function basePath() {

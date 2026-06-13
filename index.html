@@ -5,11 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0b5cff">
   <meta name="description" content="剧盘 - 夸克网盘 · 永久免费 · 每日更新">
+  
+  <meta name="public-site-url" content="https://kang250813-source.github.io/jupan-pages">
+  
   <title>剧盘</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/jupan-pages/static/style.css?v=1781353336">
+  <link rel="stylesheet" href="/jupan-pages/static/style.css?v=1781354340">
   
 </head>
 <body class="">
@@ -59,10 +62,9 @@
     
 <div class="daily-update-bar" id="daily-update-bar" aria-live="polite">
   <span class="daily-update-icon" aria-hidden="true">📢</span>
-  <p class="daily-update-text">
-    今日更新短剧：<strong class="daily-update-num" data-stat="today">--</strong>部
-    <span class="daily-update-sep">总收录短剧：</span><strong class="daily-update-num" data-stat="total">--</strong>部
-  </p>
+  <div class="daily-update-marquee">
+    <div class="daily-update-track" id="daily-update-track"></div>
+  </div>
 </div>
 
 
@@ -260,13 +262,14 @@
     <h2>最新短剧</h2>
     <span class="section-hint">
       共 114 部
+       · 第 1/5 页
       
       
     </span>
   </div>
 
   
-  <div class="drama-grid">
+  <div class="drama-grid" id="drama-grid">
     
     
     <a href="/jupan-pages/drama/117.html" class="drama-card"
@@ -3655,6 +3658,10 @@
     </a>
     
   </div>
+
+  
+  <nav class="pagination" id="list-pagination" data-page-size="24" aria-label="分页" hidden></nav>
+  
   
 </section>
 
@@ -3775,9 +3782,9 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="/jupan-pages/static/app.js?v=1781353336" defer></script>
+  <script src="/jupan-pages/static/app.js?v=1781354340" defer></script>
   
-  <script src="/jupan-pages/static/static-filter.js?v=1781353336" defer></script>
+  <script src="/jupan-pages/static/static-filter.js?v=1781354340" defer></script>
   
   
 </body>
