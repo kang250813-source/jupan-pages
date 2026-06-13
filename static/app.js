@@ -134,13 +134,45 @@
   }
 
   function initQuarkButtons() {
-    document.querySelectorAll("#btn-open-quark").forEach(function (btn) {
+    document.querySelectorAll(".js-open-quark, #btn-open-quark").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var panel = btn.closest("[data-quark-url]");
         var url = panel ? panel.getAttribute("data-quark-url") : null;
         if (url) openQuark(url);
       });
     });
+  }
+
+  function initHotKeywords() {
+    var section = document.querySelector(".hot-keywords-section");
+    var toggle = document.querySelector(".hot-keywords-toggle");
+    if (!section || !toggle) return;
+
+    var mq = window.matchMedia("(max-width: 767px)");
+
+    function applyMode() {
+      if (mq.matches) {
+        section.classList.add("is-collapsed");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.textContent = "展开";
+      } else {
+        section.classList.remove("is-collapsed");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+    }
+
+    toggle.addEventListener("click", function () {
+      var collapsed = section.classList.toggle("is-collapsed");
+      toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      toggle.textContent = collapsed ? "展开" : "收起";
+    });
+
+    applyMode();
+    if (mq.addEventListener) {
+      mq.addEventListener("change", applyMode);
+    } else if (mq.addListener) {
+      mq.addListener(applyMode);
+    }
   }
 
   function initDetailPage() {
@@ -152,6 +184,7 @@
     initSearchFocus();
     initCopyButtons();
     initQuarkButtons();
+    initHotKeywords();
   });
 
   window.Duanjuku = {

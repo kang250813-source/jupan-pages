@@ -461,14 +461,34 @@ a:hover {
 
 .hot-keywords-box {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 10px 12px;
+  flex-direction: column;
+  gap: 10px;
   padding: 14px 16px;
   background: var(--card);
   border: 1px solid var(--blue-100);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
+}
+
+.hot-keywords-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hot-keywords-toggle {
+  display: none;
+  padding: 4px 12px;
+  border: 1px solid var(--blue-200);
+  border-radius: 999px;
+  background: var(--blue-50);
+  color: var(--blue-600);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .hot-keywords-label {
@@ -490,8 +510,12 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  flex: 1;
   min-width: 0;
+}
+
+.hot-keywords-section.is-collapsed .hot-keywords-tags {
+  max-height: 76px;
+  overflow: hidden;
 }
 
 .hot-keywords-tags--compact {
@@ -1030,6 +1054,22 @@ a:hover {
   text-align: center;
 }
 
+.detail-sticky-bar {
+  display: none;
+}
+
+.btn-icon {
+  width: 52px;
+  min-width: 52px;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.btn-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
 /* Toast */
 .toast {
   position: fixed;
@@ -1555,34 +1595,327 @@ body.admin-page .mobile-bottom-nav {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
+  :root {
+    --header-h: 52px;
+    --sticky-search-h: 56px;
+  }
+
+  .container {
+    padding: 0 12px;
+  }
+
+  .header-inner {
+    min-height: var(--header-h);
+    gap: 8px;
+  }
+
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .brand-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .brand-text strong {
+    font-size: 0.95rem;
+  }
+
   .brand-text small {
     display: none;
   }
 
+  .sticky-search-wrap {
+    top: var(--header-h);
+    padding: 8px 0;
+  }
+
   .search-bar {
-    padding: 6px 8px 6px 12px;
+    padding: 4px 6px 4px 10px;
+    gap: 6px;
+    border-radius: 12px;
+  }
+
+  .search-bar input[type="search"] {
+    padding: 10px 2px;
+    font-size: 16px;
   }
 
   .btn-search {
-    padding: 10px 14px;
+    padding: 10px 12px;
     font-size: 13px;
   }
 
+  .btn-clear {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
   .hero {
-    padding: 28px 20px 24px;
+    margin: 4px 0 16px;
+    padding: 18px 16px 16px;
+    border-radius: var(--radius);
+  }
+
+  .hero-badges {
+    margin-bottom: 10px;
+    gap: 6px;
+  }
+
+  .hero-badges .pill {
+    padding: 3px 10px;
+    font-size: 0.72rem;
+  }
+
+  .hero-title {
+    font-size: 1.35rem;
+    margin-bottom: 8px;
+  }
+
+  .hero-desc {
+    display: none;
   }
 
   .hero-stats {
-    gap: 16px;
+    gap: 12px;
+  }
+
+  .stat-item strong {
+    font-size: 1.2rem;
+  }
+
+  .stat-item span {
+    font-size: 0.72rem;
   }
 
   .stat-divider {
     display: none;
   }
 
+  .hot-keywords-section {
+    margin-bottom: 16px;
+  }
+
+  .hot-keywords-box {
+    padding: 12px;
+  }
+
+  .hot-keywords-toggle {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .hot-keywords-tags {
+    gap: 6px;
+    padding-bottom: 2px;
+  }
+
+  .hot-keywords-section.is-collapsed .hot-keywords-tags {
+    max-height: 68px;
+    overflow: hidden;
+  }
+
+  .hot-keywords-section:not(.is-collapsed) .hot-keywords-tags {
+    max-height: none;
+  }
+
+  .hot-keyword-chip {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  .section-head {
+    margin-bottom: 10px;
+  }
+
+  .section-head h2 {
+    font-size: 1rem;
+  }
+
+  .section-hint {
+    font-size: 0.75rem;
+  }
+
+  .list-section {
+    margin-bottom: 20px;
+  }
+
   .drama-grid {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 140px));
-    justify-content: center;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    justify-content: stretch;
+  }
+
+  .drama-card {
+    border-radius: 12px;
+  }
+
+  .drama-card:hover {
+    transform: none;
+  }
+
+  .drama-card-body {
+    padding: 8px 8px 10px;
+  }
+
+  .drama-card-title {
+    font-size: 0.75rem;
+    line-height: 1.35;
+    -webkit-line-clamp: 2;
+  }
+
+  .drama-card-tags {
+    display: none;
+  }
+
+  .drama-card-meta time {
+    display: none;
+  }
+
+  .watch-hint {
+    display: none;
+  }
+
+  .episode-badge {
+    top: 6px;
+    right: 6px;
+    padding: 2px 7px;
+    font-size: 0.65rem;
+  }
+
+  .detail-page {
+    padding: 0 0 16px;
+  }
+
+  body.page-detail .main-content {
+    padding-bottom: calc(var(--mobile-nav-h) + 72px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .detail-hero {
+    display: grid;
+    grid-template-columns: 108px 1fr;
+    gap: 12px;
+    align-items: start;
+    margin-bottom: 16px;
+  }
+
+  .detail-cover {
+    max-width: none;
+    margin: 0;
+    border-radius: var(--radius);
+  }
+
+  .detail-info h1 {
+    font-size: 1rem;
+    margin: 6px 0;
+    line-height: 1.45;
+  }
+
+  .detail-tip {
+    display: none;
+  }
+
+  .detail-meta {
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+  }
+
+  .detail-tags {
+    gap: 4px;
+    margin-bottom: 0;
+  }
+
+  .tag-chip--small {
+    padding: 4px 8px;
+    font-size: 0.72rem;
+  }
+
+  .cta-panel {
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .cta-link-preview {
+    display: none;
+  }
+
+  .qr-panel {
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+
+  .qr-panel-head p {
+    font-size: 0.78rem;
+  }
+
+  .qr-wrap img {
+    width: 160px;
+    height: 160px;
+  }
+
+  .detail-sticky-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px));
+    z-index: 95;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.08);
+  }
+
+  .detail-sticky-bar .btn-quark {
+    flex: 1;
+    padding: 14px 16px;
+    font-size: 1rem;
+  }
+
+  .related-section {
+    padding: 20px 0 24px;
+  }
+
+  .related-heading {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .related-link {
+    font-size: 0.88rem;
+  }
+
+  .related-item {
+    padding: 8px 0;
+  }
+
+  .site-footer {
+    padding: 20px 12px calc(16px + env(safe-area-inset-bottom, 0px));
+    font-size: 0.75rem;
+  }
+
+  .footer-disclaimer {
+    font-size: 0.72rem;
+    line-height: 1.55;
+    padding: 10px 12px;
+  }
+
+  .page-detail .site-footer {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 600px) {
+  .brand-text small {
+    display: none;
   }
 }

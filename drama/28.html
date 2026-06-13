@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/jupan-pages/static/style.css?v=1781314775">
+  <link rel="stylesheet" href="/jupan-pages/static/style.css?v=1781329575">
   
 </head>
 <body class="page-detail">
@@ -69,7 +69,7 @@
   </div>
 
   <div class="cta-panel" data-quark-url="https://pan.quark.cn/s/4be28e204e21">
-    <button type="button" class="btn btn-quark btn-xl" id="btn-open-quark">
+    <button type="button" class="btn btn-quark btn-xl js-open-quark" id="btn-open-quark">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7-11-7Z" fill="currentColor"/></svg>
       打开夸克观看
     </button>
@@ -102,6 +102,16 @@
     <a href="/jupan-pages/" class="btn btn-ghost">← 返回短剧列表</a>
   </div>
 </article>
+
+<div class="detail-sticky-bar" data-quark-url="https://pan.quark.cn/s/4be28e204e21" aria-label="快捷操作">
+  <button type="button" class="btn btn-quark btn-xl js-open-quark">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7-11-7Z" fill="currentColor"/></svg>
+    打开夸克观看
+  </button>
+  <button type="button" class="btn btn-copy btn-icon js-copy-link" data-copy="https://pan.quark.cn/s/4be28e204e21" aria-label="复制链接">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+  </button>
+</div>
 
   </main>
 
@@ -236,9 +246,9 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="/jupan-pages/static/app.js?v=1781314775" defer></script>
+  <script src="/jupan-pages/static/app.js?v=1781329575" defer></script>
   
-  <script src="/jupan-pages/static/static-filter.js?v=1781314775" defer></script>
+  <script src="/jupan-pages/static/static-filter.js?v=1781329575" defer></script>
   
   
 <script>
