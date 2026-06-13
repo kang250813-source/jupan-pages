@@ -143,28 +143,9 @@
     });
   }
 
-  function initDetailPage(url) {
+  function initDetailPage() {
     initQuarkButtons();
     initCopyButtons();
-
-    var canvas = document.getElementById("qr-canvas");
-    if (canvas && window.QRCode) {
-      QRCode.toCanvas(
-        canvas,
-        url,
-        {
-          width: 200,
-          margin: 2,
-          color: { dark: "#0a1628", light: "#ffffff" },
-        },
-        function (err) {
-          if (err) {
-            var panel = document.getElementById("qr-panel");
-            if (panel) panel.style.display = "none";
-          }
-        }
-      );
-    }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
