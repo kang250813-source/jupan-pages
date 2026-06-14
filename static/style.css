@@ -2129,11 +2129,6 @@ body.admin-page .mobile-bottom-nav {
     min-width: 0;
   }
 
-  /* 手机端已有底部快捷栏，隐藏中间大按钮区，避免重复 */
-  .page-detail .cta-panel {
-    display: none;
-  }
-
   .detail-info h1 {
     font-size: 1rem;
     margin: 6px 0;
