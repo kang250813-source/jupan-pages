@@ -222,33 +222,64 @@
     });
   }
 
+  function hashString(str) {
+    var hash = 2166136261;
+    for (var i = 0; i < str.length; i++) {
+      hash ^= str.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+    return hash >>> 0;
+  }
+
+  function mulberry32(seed) {
+    return function () {
+      seed |= 0;
+      seed = (seed + 0x6d2b79f5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function initDailyDramaShuffle() {
+    var grid = document.getElementById("drama-grid");
+    if (!grid) return;
+
+    var params = new URLSearchParams(window.location.search);
+    var tag = params.get("tag") || "";
+    var q = params.get("q") || "";
+    var dateKey = new Date().toISOString().slice(0, 10);
+    var rng = mulberry32(hashString("drama-shuffle|" + dateKey + "|" + tag + "|" + q));
+    var cards = Array.prototype.slice.call(grid.querySelectorAll(".drama-card"));
+
+    for (var i = cards.length - 1; i > 0; i--) {
+      var j = Math.floor(rng() * (i + 1));
+      var tmp = cards[i];
+      cards[i] = cards[j];
+      cards[j] = tmp;
+    }
+
+    cards.forEach(function (card) {
+      grid.appendChild(card);
+    });
+  }
+
   function initDailyUpdateBar() {
     var bar = document.getElementById("daily-update-bar");
     var track = document.getElementById("daily-update-track");
     if (!bar || !track) return;
 
     function hashDate(dateStr) {
-      var hash = 2166136261;
-      for (var i = 0; i < dateStr.length; i++) {
-        hash ^= dateStr.charCodeAt(i);
-        hash = Math.imul(hash, 16777619);
-      }
-      return hash >>> 0;
+      return hashString(dateStr);
     }
 
-    function mulberry32(seed) {
-      return function () {
-        seed |= 0;
-        seed = (seed + 0x6d2b79f5) | 0;
-        var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-      };
+    function mulberry32Local(seed) {
+      return mulberry32(seed);
     }
 
     var dateKey = new Date().toISOString().slice(0, 10);
-    var rand = mulberry32(hashDate(dateKey));
-    var liveRand = mulberry32(hashDate(dateKey + "-live"));
+    var rand = mulberry32Local(hashDate(dateKey));
+    var liveRand = mulberry32Local(hashDate(dateKey + "-live"));
 
     var stats = {
       today: 68 + Math.floor(rand() * 133),
@@ -509,6 +540,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     initSearchFocus();
     initDailyUpdateBar();
+    initDailyDramaShuffle();
     initCopyButtons();
     initShareButtons();
     initQuarkButtons();
