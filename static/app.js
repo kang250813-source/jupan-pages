@@ -162,17 +162,20 @@
           url: pageUrl,
         })
         .then(function () {
+          trackEvent("share_page", window.location.pathname);
           showToast("已唤起分享", "success");
         })
         .catch(function (err) {
           if (err && err.name === "AbortError") return;
           return copyText(text).then(function () {
+            trackEvent("share_page", window.location.pathname);
             showToast("分享文案已复制，可粘贴到微信发给好友", "success");
           });
         });
     }
 
     return copyText(text).then(function () {
+      trackEvent("share_page", window.location.pathname);
       showToast("分享文案已复制，可粘贴到微信发给好友", "success");
       btn.classList.add("is-shared");
       setTimeout(function () {
@@ -193,12 +196,31 @@
     });
   }
 
+  function trackEvent(name, label) {
+    var meta = document.querySelector('meta[name="analytics-provider"]');
+    var provider = meta ? meta.content : "";
+    if (provider === "baidu" && window._hmt) {
+      window._hmt.push(["_trackEvent", "site", name, label || "", 1]);
+    }
+    if (provider === "umami" && window.umami && typeof window.umami.track === "function") {
+      window.umami.track(name, { label: label || "" });
+    }
+    if (provider === "google" && typeof window.gtag === "function") {
+      window.gtag("event", name, {
+        event_category: "site",
+        event_label: label || "",
+        page_path: label || window.location.pathname,
+      });
+    }
+  }
+
   function initCopyButtons() {
     document.querySelectorAll("[data-copy]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var text = btn.getAttribute("data-copy");
         copyText(text)
           .then(function () {
+            trackEvent("copy_link", window.location.pathname);
             showToast("链接已复制，可粘贴到夸克打开", "success");
             btn.classList.add("is-copied");
             setTimeout(function () {
@@ -217,7 +239,10 @@
       btn.addEventListener("click", function () {
         var panel = btn.closest("[data-quark-url]");
         var url = panel ? panel.getAttribute("data-quark-url") : null;
-        if (url) openQuark(url);
+        if (url) {
+          trackEvent("open_quark", window.location.pathname);
+          openQuark(url);
+        }
       });
     });
   }
