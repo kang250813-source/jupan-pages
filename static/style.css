@@ -1051,6 +1051,14 @@ a:hover {
 
 .cover-img--large {
   border-radius: var(--radius-lg);
+  max-width: 100%;
+}
+
+.detail-cover .cover-img--large {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
 }
 
 .cover-gradient--large {
@@ -2072,9 +2080,36 @@ body.admin-page .mobile-bottom-nav {
   }
 
   .detail-cover {
-    max-width: none;
+    width: 108px;
+    max-width: 108px;
     margin: 0;
     border-radius: var(--radius);
+    overflow: hidden;
+    align-self: start;
+    grid-column: 1;
+    grid-row: 1;
+    line-height: 0;
+  }
+
+  .detail-cover .cover-img,
+  .detail-cover .cover-img--large {
+    display: block;
+    width: 108px;
+    max-width: 108px;
+    height: auto;
+    aspect-ratio: 5 / 7;
+    object-fit: cover;
+  }
+
+  .detail-info {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  /* 手机端已有底部快捷栏，隐藏中间大按钮区，避免重复 */
+  .page-detail .cta-panel {
+    display: none;
   }
 
   .detail-info h1 {
