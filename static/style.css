@@ -1196,8 +1196,16 @@ a:hover {
   background: #e2e8f0;
 }
 
+/* 详情页有封面图时不显示播放占位；无图时保留 ▶ */
 .detail-cover:has(.cover-img) .cover-play {
   display: none;
+}
+
+/* iOS/微信内 backdrop-filter + overflow:hidden 会在封面上渲染出大块模糊圆角 */
+.detail-cover .episode-badge {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(0, 0, 0, 0.72);
 }
 
 .detail-info h1 {
@@ -2089,6 +2097,20 @@ body.admin-page .mobile-bottom-nav {
     grid-column: 1;
     grid-row: 1;
     line-height: 0;
+    isolation: isolate;
+  }
+
+  .detail-cover .episode-badge {
+    top: 6px;
+    right: 6px;
+    bottom: auto;
+    left: auto;
+    padding: 2px 7px;
+    font-size: 0.65rem;
+    max-width: calc(100% - 12px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .detail-cover .cover-img,
